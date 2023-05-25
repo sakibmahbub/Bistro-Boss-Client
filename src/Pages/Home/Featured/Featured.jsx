@@ -3,7 +3,7 @@ import featured from "../../../assets/home/featured.jpg";
 import "./Featured.css";
 const Featured = () => {
   return (
-    <section className="featured-item text-white pt-8 my-24">
+    <section className="featured-item bg-fixed text-white pt-8 my-24">
       <SectionTitle
         subHeading="Check it out"
         heading="Featured Item"
@@ -23,7 +23,9 @@ const Featured = () => {
             error. Placeat sunt, architecto optio, aspernatur totam blanditiis
             repudiandae itaque esse error debitis autem.
           </p>
-          <button className="btn btn-outline">Order Now</button>
+          <button className="mt-5 btn btn-outline border-0 border-b-4 border-white text-white">
+            Order Now
+          </button>
         </div>
       </div>
     </section>

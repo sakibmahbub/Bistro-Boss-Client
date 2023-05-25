@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import MenuItem from "../../Shared/Menuitem/MenuItem";
 
 const PopularMenu = () => {
   const [menu, setMenu] = useState([]);
@@ -13,11 +14,16 @@ const PopularMenu = () => {
       });
   }, []);
   return (
-    <section>
+    <section className="my-24">
       <SectionTitle
         heading="From Our Menu"
         subHeading="Popular items here"
       ></SectionTitle>
+      <div className="grid md:grid-cols-2 gap-12">
+        {menu.map((item) => (
+          <MenuItem key={item._id} item={item}></MenuItem>
+        ))}
+      </div>
     </section>
   );
 };

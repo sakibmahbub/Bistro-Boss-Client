@@ -1,5 +1,28 @@
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 import loginImg from "../../assets/others/authentication2.png";
+import { useEffect, useRef, useState } from "react";
 const Login = () => {
+  const captchaRef = useRef(null);
+  const [disabled, setdisabled] = useState(true);
+
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
+
+  const handleValidateCaptcha = (event) => {
+    event.preventDefault();
+    const user_captcha_value = captchaRef.current.value;
+
+    if (validateCaptcha(user_captcha_value)) {
+      setdisabled(false);
+    } else {
+      setdisabled(true);
+    }
+  };
   return (
     <div className="hero min-h-screen">
       <div className="hero-content flex-col  md:flex-row-reverse">
@@ -27,16 +50,30 @@ const Login = () => {
                 placeholder="password"
                 className="input input-bordered"
               />
+            </div>
+            <div className="form-control">
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                <LoadCanvasTemplate />
               </label>
+              <input
+                type="text"
+                name="captcha"
+                ref={captchaRef}
+                placeholder="type the captcha above"
+                className="input input-bordered"
+              />
+              <button
+                onClick={handleValidateCaptcha}
+                className="btn btn-outline btn-xs"
+              >
+                Validate
+              </button>
             </div>
             <div className="form-control mt-6">
               <input
                 type="submit"
                 value="Login"
+                disabled={disabled}
                 className="btn bg-[#D1A054B2] border-0"
               />
             </div>

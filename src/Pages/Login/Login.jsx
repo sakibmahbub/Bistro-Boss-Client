@@ -7,9 +7,12 @@ import authImg from "../../assets/others/authentication2.png";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 const Login = () => {
   const captchaRef = useRef(null);
   const [disabled, setdisabled] = useState(true);
+  const { logIn } = useContext(AuthContext);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -25,6 +28,21 @@ const Login = () => {
       setdisabled(true);
     }
   };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    logIn(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
       <Helmet>
@@ -36,7 +54,7 @@ const Login = () => {
             <h1 className="text-3xl mt-3 text-center font-bold">
               Sign In now!
             </h1>
-            <form className="card-body">
+            <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>

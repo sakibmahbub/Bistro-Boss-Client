@@ -4,13 +4,13 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import authImg from "../../assets/others/authentication2.png";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 const Login = () => {
-  const captchaRef = useRef(null);
   const [disabled, setdisabled] = useState(true);
   const { logIn } = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleValidateCaptcha = (event) => {
     event.preventDefault();
-    const user_captcha_value = captchaRef.current.value;
+    const user_captcha_value = event.target.value;
 
     if (validateCaptcha(user_captcha_value)) {
       setdisabled(false);
@@ -40,6 +40,15 @@ const Login = () => {
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        Swal.fire({
+          title: "Log in successfull!",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -84,16 +93,10 @@ const Login = () => {
                 <input
                   type="text"
                   name="captcha"
-                  ref={captchaRef}
+                  onBlur={handleValidateCaptcha}
                   placeholder="type the captcha above"
                   className="input input-bordered"
                 />
-                <button
-                  onClick={handleValidateCaptcha}
-                  className="btn btn-outline btn-xs mt-2"
-                >
-                  Validate
-                </button>
               </div>
               <div className="form-control mt-6">
                 <input

@@ -30,7 +30,7 @@ const Navbar = () => {
     logOut()
       .then(() => {
         Swal.fire({
-          title: "Log out successfull!",
+          title: "Log out successful!",
           showClass: {
             popup: "animate__animated animate__fadeInDown",
           },
@@ -78,6 +78,7 @@ const Navbar = () => {
         <div className="navbar-end">
           {user ? (
             <>
+              <span>{user?.displayName}</span>
               <button
                 onClick={handleLogout}
                 className="btn btn-outline text-white border-white"

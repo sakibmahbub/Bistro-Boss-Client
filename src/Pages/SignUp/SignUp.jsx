@@ -1,27 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import authImg from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
+
+      updateUserProfile(data.name, data.photUrl)
+        .then(() => {
+          console.log("user profile info updated");
+          reset();
+        })
+        .catch((error) => console.log(error));
+
       Swal.fire({
-        title: "Sign up successfull!",
+        title: "Sign up successful!",
         showClass: {
           popup: "animate__animated animate__fadeInDown",
         },
@@ -29,6 +40,8 @@ const SignUp = () => {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
+
+      navigate("/");
     });
   };
   return (
@@ -83,6 +96,25 @@ const SignUp = () => {
               "
                   >
                     Email is required
+                  </small>
+                )}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Photo Url</span>
+                </label>
+                <input
+                  type="text"
+                  {...register("photUrl", { required: true })}
+                  placeholder="phot url"
+                  className="input input-bordered"
+                />
+                {errors.photUrl && (
+                  <small
+                    className="text-[#D1A054] mt-2
+              "
+                  >
+                    Name is required
                   </small>
                 )}
               </div>

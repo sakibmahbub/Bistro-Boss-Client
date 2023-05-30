@@ -107,7 +107,7 @@ const Login = () => {
                 <input
                   type="submit"
                   value="Login"
-                  disabled={disabled}
+                  disabled={false}
                   className="btn bg-[#D1A054B2] border-0"
                 />
               </div>

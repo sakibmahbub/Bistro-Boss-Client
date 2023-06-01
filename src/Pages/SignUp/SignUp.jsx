@@ -26,22 +26,32 @@ const SignUp = () => {
 
       updateUserProfile(data.name, data.photUrl)
         .then(() => {
-          console.log("user profile info updated");
-          reset();
+          const userInfo = { name: data.name, email: data.email };
+          fetch(`http://localhost:5000/users`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(userInfo),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                reset();
+                Swal.fire({
+                  title: "Sign up successful!",
+                  showClass: {
+                    popup: "animate__animated animate__fadeInDown",
+                  },
+                  hideClass: {
+                    popup: "animate__animated animate__fadeOutUp",
+                  },
+                });
+                navigate("/");
+              }
+            });
         })
         .catch((error) => console.log(error));
-
-      Swal.fire({
-        title: "Sign up successful!",
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
-      });
-
-      navigate("/");
     });
   };
   return (

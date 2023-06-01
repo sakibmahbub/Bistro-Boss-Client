@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const {
@@ -173,6 +174,7 @@ const SignUp = () => {
             <p className="text-[#D1A054] font-semibold text-center mb-5">
               Already Registered? <Link to="/login">Log In!</Link>
             </p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

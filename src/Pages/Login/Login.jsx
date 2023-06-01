@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 const Login = () => {
   const [disabled, setdisabled] = useState(true);
   const { logIn } = useContext(AuthContext);
@@ -115,6 +116,7 @@ const Login = () => {
             <p className="text-[#D1A054] font-semibold text-center mb-5">
               New here? <Link to="/signup">Create a new account</Link>
             </p>
+            <SocialLogin></SocialLogin>
           </div>
           <div className="text-center md:w-1/2 lg:text-left">
             <img src={authImg} alt="authentication" />

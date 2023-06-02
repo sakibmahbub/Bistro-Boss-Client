@@ -10,11 +10,39 @@ const SocialLogin = () => {
   const from = location.state?.from?.pathname || "/";
 
   const handleGoogle = () => {
-    googleLogin().then((result) => {
-      const loggedUser = result.user;
-      navigate(from, { replace: true });
-    });
+    googleLogin()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        const userInfo = {
+          name: loggedUser.displayName,
+          email: loggedUser.email,
+        };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            Swal.fire({
+              title: "Sign up successful!",
+              showClass: {
+                popup: "animate__animated animate__fadeInDown",
+              },
+              hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+              },
+            });
+            navigate("/");
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   };
+
   return (
     <div>
       <div className="divider"></div>
